@@ -11,6 +11,15 @@
 
 let deck = document.querySelector('.deck'); //Selects the deck from the HTML
 let toggledCards = [];
+shuffleDeck();
+
+function shuffleDeck() {
+  const cardsToShuffle = Array.from(document.querySelectorAll('.deck li'));
+  const shuffledCards = shuffle(cardsToShuffle);
+  for (card of shuffledCards) {
+    deck.appendChild(card);
+  }
+}
 
 deck.addEventListener('click', function(e) {
   //creates event listener for the card tiles when clicked
