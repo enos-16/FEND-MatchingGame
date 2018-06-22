@@ -9,14 +9,61 @@
  *   - add each card's HTML to the page
  */
 
-let deck = document.querySelector('.deck');
-deck.addEventListener('click', function(e) {
+let deck = document.querySelector('.deck'); //Selects the deck from the HTML
+let toggledCards = [];
+
+deck.addEventListener('click', function(e) { //creates event listener for the card tiles when clicked
+  e.preventDefault();
   const clickTarget = e.target;
-  if (clickTarget.classList.contains('card')) {
-    console.log("I'm a card!");
+  if (isClickValid(clickTarget)) {
+    toggleCard(clickTarget);
+    addToggledCards(clickTarget);
+    if (toggledCards.length === 2) {
+      console.log("you clicked 2 cards");
+      console.log(toggledCards);
+      checkCardMatch();
+    }
   }
 });
-console.log(deck);
+
+
+//function to toggle cards from open/show to closed and vice-versa
+function toggleCard(target) {
+  target.classList.toggle('open');
+  target.classList.toggle('show');
+}
+
+//function to add toggled cards to the array
+function addToggledCards(target) {
+  toggledCards.push(target);
+}
+
+//fuction to check if toggled cards matched
+function checkCardMatch() {
+  if (toggledCards[0].firstElementChild.className === toggledCards[1].firstElementChild.className) {
+    console.log('match!');
+    toggledCards[0].classList.toggle('match');
+    toggledCards[1].classList.toggle('match');
+    toggledCards = [];
+  } else {
+    console.log('no match \:\(');
+    setTimeout(() => {
+      toggleCard(toggledCards[0]);
+      toggleCard(toggledCards[1]);
+      toggledCards = [];
+    }, 500)
+  }
+}
+
+//this funtion checks the target for classes and ensures they are not already matched items, limits the selected items in the array to 2 and checks the array to ensure that it doesn't include the same target
+function isClickValid(clickTarget) {
+  return (
+    clickTarget.classList.contains('card') &&
+    !clickTarget.classList.contains('match') &&
+    toggledCards.length < 2 &&
+    !toggledCards.includes(clickTarget)
+  );
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -36,7 +83,7 @@ function shuffle(array) {
 }
 
 /*
- * set up the event listener for a card. 
+ * set up the event listener for a card.
  * If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
