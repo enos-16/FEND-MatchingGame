@@ -11,6 +11,7 @@
 
 let deck = document.querySelector('.deck'); //Selects the deck from the HTML
 let toggledCards = [];
+let moves = 0;
 shuffleDeck();
 
 function shuffleDeck() {
@@ -29,9 +30,9 @@ deck.addEventListener('click', function(e) {
     toggleCard(clickTarget);
     addToggledCards(clickTarget);
     if (toggledCards.length === 2) {
-      console.log('you clicked 2 cards');
-      console.log(toggledCards);
       checkCardMatch();
+      addMoves();
+      checkStars();
     }
   }
 });
@@ -92,6 +93,28 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function addMoves() {
+  moves++;
+  const movesText = document.querySelector('.moves');
+  movesText.innerHTML = moves;
+}
+
+function checkStars() {
+  if (moves === 16 || moves === 24) {
+    removeStar();
+  }
+}
+
+function removeStar() {
+  const starList = document.querySelectorAll('.stars li');
+  for (star of starList) {
+    if (star.style.display !== 'none') {
+      star.style.display = 'none';
+      break;
+    }
+  }
 }
 
 /*
