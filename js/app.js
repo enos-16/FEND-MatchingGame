@@ -12,6 +12,10 @@
 let deck = document.querySelector('.deck'); //Selects the deck from the HTML
 let toggledCards = [];
 let moves = 0;
+let clockOff = true;
+let time = 0;
+let clockID;
+
 shuffleDeck();
 
 function shuffleDeck() {
@@ -27,8 +31,14 @@ deck.addEventListener('click', function(e) {
   e.preventDefault();
   const clickTarget = e.target;
   if (isClickValid(clickTarget)) {
+    if (clockOff) {
+      startClock();
+      clockOff = false;
+    }
+
     toggleCard(clickTarget);
     addToggledCards(clickTarget);
+
     if (toggledCards.length === 2) {
       checkCardMatch();
       addMoves();
@@ -54,12 +64,12 @@ function checkCardMatch() {
     toggledCards[0].firstElementChild.className ===
     toggledCards[1].firstElementChild.className
   ) {
-    console.log('match!');
+    //console.log('match!');
     toggledCards[0].classList.toggle('match');
     toggledCards[1].classList.toggle('match');
     toggledCards = [];
   } else {
-    console.log('no match :(');
+    //console.log('no match \:\(');
     setTimeout(() => {
       toggleCard(toggledCards[0]);
       toggleCard(toggledCards[1]);
@@ -115,6 +125,29 @@ function removeStar() {
       break;
     }
   }
+}
+
+function startClock() {
+  clockID = setInterval(() => {
+    time++;
+    displayTime();
+  }, 1000);
+}
+
+function stopClock() {
+  clearInterval(clockID);
+}
+
+function displayTime() {
+  const clock = document.querySelector('.clock');
+  const seconds = time % 60;
+  const minutes = Math.floor(time / 60);
+  if (seconds < 10) {
+    clock.innerHTML = `${minutes}:0${seconds}`;
+  } else {
+    clock.innerHTML = `${minutes}:${seconds}`;
+  }
+  //console.log(clock);
 }
 
 /*
