@@ -15,6 +15,8 @@ let moves = 0;
 let clockOff = true;
 let time = 0;
 let clockID;
+let matched = 0;
+const Total_Pairs = 8;
 
 shuffleDeck();
 
@@ -53,11 +55,11 @@ document.querySelector('.modal_cancel').addEventListener('click', function(e) {
   toggleModal();
 });
 
-//restarts game after clicking restart button in the modal window
-document.querySelector('.modal_retry').addEventListener('click', function(e) {
-  e.preventDefault();
-  //add function to restart game here
-});
+//restarts game after clicking the restart button in the score panal
+document.querySelector('.restart').addEventListener('click', resetGame);
+
+//resets game after clicking retry button in the modal window
+document.querySelector('.modal_retry').addEventListener('click', retryGame);
 
 //function to toggle cards from open/show to closed and vice-versa
 function toggleCard(target) {
@@ -80,6 +82,10 @@ function checkCardMatch() {
     toggledCards[0].classList.toggle('match');
     toggledCards[1].classList.toggle('match');
     toggledCards = [];
+    matched++;
+    if (matched === Total_Pairs) {
+      gameOver();
+    }
   } else {
     //console.log('no match \:\(');
     setTimeout(() => {
@@ -188,6 +194,44 @@ function getStarsVal() {
     }
   }
   return starCount;
+}
+
+function resetGame() {
+  resetClock();
+  resetMoves();
+  resetStars();
+  shuffleDeck();
+}
+
+function resetClock() {
+  stopClock();
+  clockOff = true;
+  time = 0;
+  displayTime();
+}
+
+function resetMoves() {
+  moves = 0;
+  document.querySelector('.moves').innerHTML = moves;
+}
+
+function resetStars() {
+  star = 0;
+  const starList = document.querySelectorAll('.stars li');
+  for (star of starList) {
+    star.style.display = 'inline';
+  }
+}
+
+function gameOver() {
+  stopClock();
+  writeStatsToModal();
+  toggleModal();
+}
+
+function retryGame() {
+  resetGame();
+  toggleModal();
 }
 
 /*
