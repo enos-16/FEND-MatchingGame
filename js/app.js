@@ -150,6 +150,11 @@ function displayTime() {
   //console.log(clock);
 }
 
+function toggleModal() {
+  let modal = document.querySelector('.modal_background');
+  modal.classList.toggle('hide');
+}
+
 /*
  * set up the event listener for a card.
  * If a card is clicked:

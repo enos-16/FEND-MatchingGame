@@ -35,7 +35,7 @@ h1 {
 
 /*
  * Styles for the deck of cards
- */
+*/
 
 .deck {
   width: 660px;
@@ -66,7 +66,7 @@ h1 {
 }
 
 .deck .card.open {
-  transform: rotateY(0);
+  /*transform: rotateY(0);*/
   background: #02b3e4;
   cursor: default;
 }
@@ -83,7 +83,7 @@ h1 {
 
 /*
  * Styles for the Score Panel
- */
+*/
 
 .score-panel {
   text-align: left;
@@ -113,4 +113,71 @@ h1 {
 .score-panel .restart {
   float: right;
   cursor: pointer;
+}
+
+/*
+ * Styles for the modal
+*/
+
+.modal_background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(46, 61, 73, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal_background.hide {
+  display: none;
+}
+
+.modal_body {
+  position: relative;
+  /* height: 400px; */
+  width: 400px;
+  background: #ffffff;
+}
+
+.modal_heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: black 1px solid;
+  padding: 0 1.5em;
+}
+
+.modal_heading h2 {
+  margin: 0.25em;
+}
+
+.modal_heading span {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.modal_stats {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid;
+  padding: 0.75rem;
+}
+
+.modal_stats span {
+  padding: 0.5em;
+}
+
+.modal_buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.modal_btn {
+  height: 2.5em;
+  width: 5em;
 }
