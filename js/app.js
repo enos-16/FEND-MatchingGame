@@ -47,6 +47,18 @@ deck.addEventListener('click', function(e) {
   }
 });
 
+//closes modal window after completing a game
+document.querySelector('.modal_cancel').addEventListener('click', function(e) {
+  e.preventDefault();
+  toggleModal();
+});
+
+//restarts game after clicking restart button in the modal window
+document.querySelector('.modal_retry').addEventListener('click', function(e) {
+  e.preventDefault();
+  //add function to restart game here
+});
+
 //function to toggle cards from open/show to closed and vice-versa
 function toggleCard(target) {
   target.classList.toggle('open');
@@ -153,6 +165,29 @@ function displayTime() {
 function toggleModal() {
   let modal = document.querySelector('.modal_background');
   modal.classList.toggle('hide');
+}
+
+function writeStatsToModal() {
+  const movesStats = document.querySelector('.modal_moves');
+  const starStats = document.querySelector('.modal_stars');
+  const timeStats = document.querySelector('.modal_time');
+  const clockVal = document.querySelector('.clock').innerHTML;
+  const stars = getStarsVal();
+
+  movesStats.innerHTML = `Moves = ${moves}`;
+  starStats.innerHTML = `Stars = ${stars}`;
+  timeStats.innerHTML = `Time = ${clockVal}`;
+}
+
+function getStarsVal() {
+  stars = document.querySelectorAll('.stars li');
+  starCount = 0;
+  for (star of stars) {
+    if (star.style.display !== 'none') {
+      starCount++;
+    }
+  }
+  return starCount;
 }
 
 /*
