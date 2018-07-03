@@ -55,6 +55,11 @@ document.querySelector('.modal_cancel').addEventListener('click', function(e) {
   toggleModal();
 });
 
+document.querySelector('.modal_close').addEventListener('click', function(e) {
+  e.preventDefault();
+  toggleModal();
+});
+
 //restarts game after clicking the restart button in the score panal
 document.querySelector('.restart').addEventListener('click', resetGame);
 
@@ -79,6 +84,8 @@ function checkCardMatch() {
     toggledCards[1].firstElementChild.className
   ) {
     //console.log('match!');
+    toggleCard(toggledCards[0]);
+    toggleCard(toggledCards[1]);
     toggledCards[0].classList.toggle('match');
     toggledCards[1].classList.toggle('match');
     toggledCards = [];
@@ -196,10 +203,16 @@ function getStarsVal() {
   return starCount;
 }
 
+function retryGame() {
+  resetGame();
+  toggleModal();
+}
+
 function resetGame() {
   resetClock();
   resetMoves();
   resetStars();
+  resetDeck();
   shuffleDeck();
 }
 
@@ -223,14 +236,16 @@ function resetStars() {
   }
 }
 
+function resetDeck() {
+  const cardsToReset = Array.from(document.querySelectorAll('.deck li'));
+  cardsToReset.forEach(c => {
+    c.classList.remove('match');
+  });
+}
+
 function gameOver() {
   stopClock();
   writeStatsToModal();
-  toggleModal();
-}
-
-function retryGame() {
-  resetGame();
   toggleModal();
 }
 
