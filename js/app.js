@@ -214,6 +214,7 @@ function resetGame() {
   resetStars();
   resetDeck();
   shuffleDeck();
+  matched = 0;
 }
 
 function resetClock() {
